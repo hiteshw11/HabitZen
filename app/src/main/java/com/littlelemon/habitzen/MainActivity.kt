@@ -1,5 +1,6 @@
 package com.littlelemon.habitzen
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
@@ -16,15 +17,8 @@ class MainActivity : AppCompatActivity() {
         val myButton = findViewById<Button>(R.id.LetsGetStarted)
         myButton.setOnClickListener {
             // Code to execute when the button is clicked
-            setContentView(R.layout.homepage)
-        }
-
-
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+            val intent = Intent(this, HomePage::class.java)
+            startActivity(intent)
         }
     }
 }

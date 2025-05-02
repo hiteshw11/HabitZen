@@ -1,6 +1,8 @@
 package com.littlelemon.habitzen
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,10 +13,11 @@ class HomePage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homepage)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.home_page)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        val clickableLayout = findViewById<LinearLayout>(R.id.clickableLayout)
+
+        clickableLayout.setOnClickListener {
+            val intent = Intent(this, CreateNewHabit::class.java)
+            startActivity(intent)
         }
     }
 }

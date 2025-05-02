@@ -12,18 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HabitZen"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            >
 
-
+        <!-- Main Activity -->
+        <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Home Page Activity -->
+        <activity android:name=".HomePage" android:exported="true">
+<!--        <intent-filter>-->
+<!--            <action android:name="android.intent.action.MAIN" />-->
+<!--            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--        </intent-filter>-->
+        </activity>
+        <!-- Create New Habit Activity -->
+        <activity android:name=".CreateNewHabit" android:exported="true" />
+
     </application>
 
 </manifest>
