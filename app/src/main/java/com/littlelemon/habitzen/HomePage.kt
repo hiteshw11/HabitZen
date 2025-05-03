@@ -14,7 +14,8 @@ class HomePage : AppCompatActivity() {
         setContentView(R.layout.homepage)
 
         val clickableLayout = findViewById<LinearLayout>(R.id.clickableLayout)
-        val completedClick=findViewById<LinearLayout>(R.id.completedclc)
+        val completedClick  = findViewById<LinearLayout>(R.id.completedclc)
+
         clickableLayout.setOnClickListener {
             val intent = Intent(this, CreateNewHabit::class.java)
             startActivity(intent)

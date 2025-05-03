@@ -1,10 +1,28 @@
 package com.littlelemon.habitzen
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 
 class CompletedClick: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.completed_click)
+
+        val create_new_button = findViewById<LinearLayout>(R.id.create_new_completed)
+
+        val home_button = findViewById<LinearLayout>(R.id.home_Layout_completed)
+
+
+        create_new_button.setOnClickListener {
+            val intent = Intent(this, CreateNewHabit::class.java)
+            startActivity(intent)
+        }
+
+        home_button.setOnClickListener {
+            val intent = Intent(this, HomePage::class.java)
+            startActivity(intent)
+        }
     }
 }
