@@ -15,7 +15,6 @@ class CreateNewHabit : AppCompatActivity() {
         val homeclick = findViewById<LinearLayout>(R.id.home_Layout)
 
         val completed = findViewById<LinearLayout>(R.id.completed_new_habit)
-
             homeclick.setOnClickListener {
                 val intent = Intent(this, HomePage::class.java)
                 startActivity(intent)

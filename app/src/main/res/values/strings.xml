@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">HabitZen</string>
+    <string-array name="spinner">
+        <item>Health And Fitness</item>
+        <item>Finance</item>
+        <item>Socializing</item>
+    </string-array>
+
 </resources>
