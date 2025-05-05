@@ -184,7 +184,7 @@
         app:layout_constraintVertical_bias="0.155" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/habitNameInput"
         android:layout_width="278dp"
         android:layout_height="57dp"
         android:background="@drawable/rounded_background"
@@ -232,7 +232,7 @@
 
         <!-- Add similar RadioButtons for other days -->
         <CheckBox
-            android:id="@+id/radioMonday"
+            android:id="@+id/checkBoxMonday"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:background="@drawable/checkbox_button_selector"
@@ -245,7 +245,7 @@
             />
 
         <CheckBox
-            android:id="@+id/radioTuesday"
+            android:id="@+id/checkBoxTuesday"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/checkbox_button_selector"
@@ -256,7 +256,7 @@
             android:textColor="@color/checkbox_text_selector" />
 
         <CheckBox
-            android:id="@+id/radioWednesday"
+            android:id="@+id/checkBoxWednesday"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/checkbox_button_selector"
@@ -267,7 +267,7 @@
             android:textColor="@color/checkbox_text_selector" />
 
         <CheckBox
-            android:id="@+id/radioThursday"
+            android:id="@+id/checkBoxThursday"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/checkbox_button_selector"
@@ -278,7 +278,7 @@
             android:textColor="@color/checkbox_text_selector" />
 
         <CheckBox
-            android:id="@+id/radioFriday"
+            android:id="@+id/checkBoxFriday"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/checkbox_button_selector"
@@ -289,7 +289,7 @@
             android:textColor="@color/checkbox_text_selector" />
 
         <CheckBox
-            android:id="@+id/radioSaturday"
+            android:id="@+id/checkBoxSaturday"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/checkbox_button_selector"
@@ -300,7 +300,7 @@
             android:textColor="@color/checkbox_text_selector" />
 
         <CheckBox
-            android:id="@+id/radioSunday"
+            android:id="@+id/checkBoxSunday"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/checkbox_button_selector"
@@ -310,6 +310,20 @@
             android:text="S"
             android:textColor="@color/checkbox_text_selector" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/createHabitButton"
+        android:layout_width="185dp"
+        android:layout_height="69dp"
+        android:text="Create New Habit"
+        android:textAlignment="center"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.779" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

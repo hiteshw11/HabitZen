@@ -9,9 +9,11 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="209dp"
-        android:layout_height="57dp"
+        android:layout_width="268dp"
+        android:layout_height="69dp"
+        android:gravity="center"
         android:text="Welcome To Habit Zen"
+        android:background="@drawable/rounded_background"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,9 +24,10 @@
 
     <Button
         android:id="@+id/LetsGetStarted"
-        android:layout_width="159dp"
-        android:layout_height="80dp"
+        android:layout_width="233dp"
+        android:layout_height="97dp"
         android:text="Let's Work On My Habits"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.539"

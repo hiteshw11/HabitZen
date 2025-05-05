@@ -3,6 +3,7 @@ package com.littlelemon.habitzen
 import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,6 +26,16 @@ class HomePage : AppCompatActivity() {
             val intent = Intent(this, CompletedClick::class.java)
             startActivity(intent)
         }
+
+        val habitName = intent.getStringExtra("habitName") ?: "Enter Your First Habit"
+        val habitCategory = intent.getStringExtra("habitCategory") ?: "Your First Habit Category"
+        val habitDays = intent.getStringExtra("habitDays") ?: " Your Habit Days"
+
+        findViewById<TextView>(R.id.habitNameDisplay).text = habitName
+        findViewById<TextView>(R.id.habitCategoryDisplay).text = habitCategory//"Your Habit Belongs To The "+habitCategory+" Category"
+        findViewById<TextView>(R.id.habitDaysDisplay).text = habitDays //"You Would Like To "+habitName+" On "+habitDays
+
+
 
     }
 }
