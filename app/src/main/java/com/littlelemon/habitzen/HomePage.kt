@@ -2,6 +2,7 @@ package com.littlelemon.habitzen
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -35,6 +36,16 @@ class HomePage : AppCompatActivity() {
         findViewById<TextView>(R.id.habitCategoryDisplay).text = habitCategory//"Your Habit Belongs To The "+habitCategory+" Category"
         findViewById<TextView>(R.id.habitDaysDisplay).text = habitDays //"You Would Like To "+habitName+" On "+habitDays
 
+        val habitCheckBox=findViewById<CheckBox>(R.id.habitCheckBox)
+
+        habitCheckBox.setOnCheckedChangeListener { _,isChecked->
+            if(isChecked){
+                HabitManager.addCompletedHabit(habitName)
+            }
+
+            val intent = Intent(this,CompletedClick::class.java)
+            startActivity(intent)
+        }
 
 
     }

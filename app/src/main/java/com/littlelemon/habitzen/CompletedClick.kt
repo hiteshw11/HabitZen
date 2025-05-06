@@ -3,6 +3,7 @@ package com.littlelemon.habitzen
 import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class CompletedClick: AppCompatActivity() {
@@ -24,5 +25,11 @@ class CompletedClick: AppCompatActivity() {
             val intent = Intent(this, HomePage::class.java)
             startActivity(intent)
         }
+
+
+        val completedHabitsList = HabitManager.completedHabits.joinToString("\n") // Show all completed habits
+        findViewById<TextView>(R.id.completedHabitsDisplay).text = "Activity "+completedHabitsList+" Completed"
+
+
     }
 }
