@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class CompletedClick: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +29,18 @@ class CompletedClick: AppCompatActivity() {
         }
 
 
-        val completedHabitsList = HabitManager.completedHabits.joinToString("\n") // Show all completed habits
-        findViewById<TextView>(R.id.completedHabitsDisplay).text = "Activity "+completedHabitsList+" Completed"
+//        val completedHabitsList = HabitManager.completedHabits.joinToString("\n") // Show all completed habits
+//        findViewById<TextView>(R.id.completedHabitsDisplay).text = "Activity "+completedHabitsList+" Completed"
+
+
+        val recyclerView = findViewById<RecyclerView>(R.id.completedRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+// Show all completed habits
+        val adapter = CompletedAdapter(HabitManager.completedHabits)
+        recyclerView.adapter = adapter
+
+
 
 
     }

@@ -11,6 +11,7 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.littlelemon.habitzen.HabitManager.Habit
 
 class CreateNewHabit : AppCompatActivity() {
 
@@ -39,21 +40,29 @@ class CreateNewHabit : AppCompatActivity() {
 
 
 
-    fun createHabit()
-    {
+    fun createHabit() {
         val habitName = findViewById<EditText>(R.id.habitNameInput).text.toString()
         val habitCategory = findViewById<Spinner>(R.id.spinner_one).selectedItem.toString()
         val selectedDays = getSelectedDays()
 
-        // Pass data to HomePage using Intent Extras
+
+        HabitManager.addHabit(Habit(habitName,habitCategory,selectedDays))
+
+        intent.putExtra("habitName", habitName)
         // Pass data to HomePage using Intent Extras
         val intent = Intent(this, HomePage::class.java)
-        intent.putExtra("habitName", habitName)
-        intent.putExtra("habitCategory", habitCategory)
-        intent.putExtra("habitDays", selectedDays)
         startActivity(intent)
 
     }
+
+//
+//        intent.putExtra("habitCategory", habitCategory)
+//        intent.putExtra("habitDays", selectedDays)
+//        startActivity(intent)
+//
+//    }
+//
+
 
     fun getSelectedDays():String
     {
