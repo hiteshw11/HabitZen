@@ -4,6 +4,7 @@ package com.littlelemon.habitzen
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -75,15 +76,23 @@ class HomePage : AppCompatActivity() {
 
         // ✅ RecyclerView Setup
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        val emptyMessageHome = findViewById<TextView>(R.id.emptyMessageHome)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // ✅ Show all created habits in RecyclerView
-        val adapter = HabitAdapter(HabitManager.createdHabits)
+
+
+
+        if (HabitManager.createdHabits.isEmpty()) {
+            emptyMessageHome.visibility = View.VISIBLE // Show "No created habits" text
+        } else {
+            emptyMessageHome.visibility = View.GONE // Hide message
+
+        }
+        val adapter = HabitAdapter(HabitManager.createdHabits) // ✅ Use HabitAdapter here
         recyclerView.adapter = adapter
 
 
-
-        }
+    }
 
     }
 
