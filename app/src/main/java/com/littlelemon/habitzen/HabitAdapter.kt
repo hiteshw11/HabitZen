@@ -27,6 +27,19 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
         holder.habitName.text = habit.name
         holder.habitCategory.text = habit.category
 
+        // ✅ Apply strikethrough if habit is completed
+        if (HabitManager.completedHabits.contains(habit.name)) {
+            holder.habitName.paintFlags = holder.habitName.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+            holder.habitCheckBox.isChecked = true
+        } else {
+            holder.habitName.paintFlags = holder.habitName.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            holder.habitCheckBox.isChecked = false
+        }
+
+
+
+
+
         holder.habitCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 HabitManager.addCompletedHabit(habit.name)
