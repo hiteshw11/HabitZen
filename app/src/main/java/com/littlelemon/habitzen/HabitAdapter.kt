@@ -18,7 +18,7 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_habit, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_habit, parent, false) // creating a mold from item_habit.xml
         return ViewHolder(view)
     }
 
