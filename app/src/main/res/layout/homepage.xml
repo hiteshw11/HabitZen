@@ -15,10 +15,25 @@
         android:visibility="invisible"
         android:layout_marginTop="60dp"
         app:layout_constraintBottom_toTopOf="@id/clickableLayout"
-        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        app:layout_constraintTop_toBottomOf="@id/dayFilterSpinner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+    <!-- Drop-down Filter (Spinner) -->
+    <Spinner
+        android:id="@+id/dayFilterSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
 
 
     <TextView
