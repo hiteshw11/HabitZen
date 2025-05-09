@@ -39,7 +39,7 @@ class HomePage : AppCompatActivity() {
 
 
 
-        val dayOptions = arrayOf("All", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+        val dayOptions = arrayOf("All", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday")
 
         val adapter1 = ArrayAdapter(this, android.R.layout.simple_spinner_item, dayOptions) // Creates a connection between the list of days (dayOptions) and the drop-down (Spinner). ✔️ Uses a basic predefined layout (simple_spinner_item) to format how each item looks inside the Spinner.
 
