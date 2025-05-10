@@ -30,6 +30,7 @@ class HomePage : AppCompatActivity() {
         }
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        val daysLabel=findViewById<TextView>(R.id.daysLabel)
         val dayFilterSpinner = findViewById<Spinner>(R.id.dayFilterSpinner)
         val emptyMessageHome = findViewById<TextView>(R.id.emptyMessageHome)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -54,6 +55,7 @@ class HomePage : AppCompatActivity() {
 
         // ✅ Improved visibility logic
         if (HabitManager.createdHabits.isEmpty()) {
+            daysLabel.visibility=View.GONE
             dayFilterSpinner.visibility = View.GONE // Hide drop-down
             emptyMessageHome.visibility = View.VISIBLE
             recyclerView.visibility = View.GONE
