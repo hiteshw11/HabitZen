@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomePage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +35,17 @@ class HomePage : AppCompatActivity() {
         val daysLabel=findViewById<TextView>(R.id.daysLabel)
         val dayFilterSpinner = findViewById<Spinner>(R.id.dayFilterSpinner)
         val emptyMessageHome = findViewById<TextView>(R.id.emptyMessageHome)
+        val statusMessage=findViewById<TextView>(R.id.todayStatusText)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Get current day of the week
+        val dateFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+        val currentDay = dateFormat.format(Date())
+
 
         // ✅ Initialize text for accessibility
         emptyMessageHome.text = "No Habits Created Yet"
-
+        statusMessage.text="Today is ${currentDay}"
 
 
         val dayOptions = arrayOf("All", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday")
