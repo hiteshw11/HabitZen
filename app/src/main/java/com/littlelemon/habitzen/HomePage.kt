@@ -11,6 +11,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.littlelemon.habitzen.HabitManager.Habit
+
+import com.littlelemon.habitzen.HabitManager.completedHabits
+import com.littlelemon.habitzen.HabitManager.createdHabits
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -42,10 +46,13 @@ class HomePage : AppCompatActivity() {
         val dateFormat = SimpleDateFormat("EEEE", Locale.getDefault())
         val currentDay = dateFormat.format(Date())
 
+        val completedHabitsSize=completedHabits.size
+        val createdHabitsSize=createdHabits.size
+
 
         // ✅ Initialize text for accessibility
         emptyMessageHome.text = "No Habits Created Yet"
-        statusMessage.text="Today is ${currentDay}"
+        statusMessage.text="Today is ${currentDay} And You Have Worked On ${completedHabitsSize} Out Of ${createdHabitsSize} Habits That You Plan To Build Today"
 
 
         val dayOptions = arrayOf("All", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday")
@@ -90,18 +97,18 @@ class HomePage : AppCompatActivity() {
     // ✅ Function to filter habits based on the selected day
     fun filterHabits(day: String) {
 
-        val filteredHabits = if (day == "All") {
-            HabitManager.createdHabits // Show all habits
-        }
-
-        else
-        {
-            HabitManager.createdHabits.filter { habit -> day in habit.days }
-        }
-
-        val habitAdapter = HabitAdapter(filteredHabits)
-        findViewById<RecyclerView>(R.id.recyclerView).adapter = habitAdapter
+        val filteredHabits =
+            if (day == "All") HabitManager.createdHabits else getHabitsForDay(day)
+            val habitAdapter = HabitAdapter(filteredHabits)
+            findViewById<RecyclerView>(R.id.recyclerView).adapter = habitAdapter
     }
+
+
+
+    fun getHabitsForDay(day: String): List<Habit> {
+        return HabitManager.createdHabits.filter { habit -> habit.days.contains(day) }
+    }
+
 
 
 
