@@ -74,6 +74,7 @@ class HomePage : AppCompatActivity() {
             dayFilterSpinner.visibility = View.GONE // Hide drop-down
             emptyMessageHome.visibility = View.VISIBLE
             recyclerView.visibility = View.GONE
+            statusMessage.text="Today is ${currentDay}"
         } else {
             emptyMessageHome.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
