@@ -49,11 +49,14 @@ class HomePage : AppCompatActivity() {
         val completedHabitsSize=completedHabits.size
         val createdHabitsSize=createdHabits.size
 
+        val todayCreatedHabits = getHabitsForToday()
+        val todayCompletedHabits = getCompletedHabitsForToday()
+
 
         // ✅ Initialize text for accessibility
         emptyMessageHome.text = "No Habits Created Yet"
-        statusMessage.text="Today is ${currentDay} And You Have Worked On ${completedHabitsSize} Out Of ${createdHabitsSize} Habits That You Plan To Build Today"
-
+        //statusMessage.text="Today is ${currentDay} And You Have Worked On ${todayCreatedHabits.size} Out Of ${todayCompletedHabits.size} Habits That You Plan To Do Today"
+        statusMessage.text = "Today is $currentDay. You have completed ${todayCompletedHabits.size} out of ${todayCreatedHabits.size} habits assigned for today."
 
         val dayOptions = arrayOf("All", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday")
 
@@ -110,6 +113,19 @@ class HomePage : AppCompatActivity() {
         return HabitManager.createdHabits.filter { habit -> habit.days.contains(day) }
     }
 
+    fun getHabitsForToday(): List<HabitManager.Habit> {
+        val dateFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+        val currentDay = dateFormat.format(Date()) // Get today's day dynamically
+        return HabitManager.createdHabits.filter { habit -> habit.days.contains(currentDay) }
+    }
+
+    fun getCompletedHabitsForToday():List<String>
+    {
+
+        val todayHabits = getHabitsForToday().map { it.name } // Get names of today’s habits
+        return HabitManager.completedHabits.filter { habitName -> todayHabits.contains(habitName) }
+
+    }
 
 
 
