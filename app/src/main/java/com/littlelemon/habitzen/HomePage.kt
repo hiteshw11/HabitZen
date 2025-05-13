@@ -119,13 +119,15 @@ class HomePage : AppCompatActivity() {
         return HabitManager.createdHabits.filter { habit -> habit.days.contains(currentDay) }
     }
 
-    fun getCompletedHabitsForToday():List<String>
+    fun getCompletedHabitsForToday():List<CompletedHabit>
     {
 
         val todayHabits = getHabitsForToday().map { it.name } // Get names of today’s habits
-        return HabitManager.completedHabits.filter { habitName -> todayHabits.contains(habitName) }
 
-    }
+        return HabitManager.completedHabits.filter { completedHabit -> todayHabits.contains(completedHabit.name)}
+
+
+        }
 
 
 

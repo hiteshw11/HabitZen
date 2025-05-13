@@ -14,6 +14,8 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val habitName: TextView = itemView.findViewById(R.id.habitNameDisplay)
         val habitCategory: TextView = itemView.findViewById(R.id.habitCategoryDisplay)
+        val habitAssignedDay: TextView = itemView.findViewById(R.id.habitAssignedDayDisplay)
+
         val habitCheckBox: CheckBox = itemView.findViewById(R.id.habitCheckBox)
     }
 
@@ -27,8 +29,10 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
         holder.habitName.text = habit.name
         holder.habitCategory.text = habit.category
 
+
+
         // ✅ Apply strikethrough if habit is completed
-        if (HabitManager.completedHabits.contains(habit.name)) {
+        if (HabitManager.completedHabits.any{it.name == habit.name}) {
             holder.habitName.paintFlags = holder.habitName.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
             holder.habitCheckBox.isChecked = true
         } else {
@@ -42,7 +46,7 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
 
         holder.habitCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                HabitManager.addCompletedHabit(habit.name)
+                HabitManager.addCompletedHabit(habit.name,habit.days)
                 // ✅ Redirect to CompletedClick activity when checkbox is checked
                 val intent = Intent(holder.itemView.context, CompletedClick::class.java)
                 holder.itemView.context.startActivity(intent)

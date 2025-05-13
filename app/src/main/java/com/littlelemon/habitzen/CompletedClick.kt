@@ -36,7 +36,12 @@ class CompletedClick: AppCompatActivity() {
             emptyMessage.visibility = View.VISIBLE // Show "No completed habits" text
         } else {
             emptyMessage.visibility = View.GONE // Hide message
-            recyclerView.adapter = CompletedAdapter(HabitManager.completedHabits)
+            recyclerView.visibility = View.VISIBLE
+
+            val completedAdapter = CompletedAdapter(HabitManager.completedHabits)
+            recyclerView.adapter = completedAdapter
+            completedAdapter.notifyDataSetChanged() // ✅ Ensure RecyclerView refreshes dynami
+
         }
     }
 }

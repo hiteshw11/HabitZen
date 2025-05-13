@@ -10,4 +10,14 @@
         android:layout_height="wrap_content"
         android:text="Completed Habit"
         android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/completedHabitDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Assigned Day"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray" />
+
+
 </LinearLayout>

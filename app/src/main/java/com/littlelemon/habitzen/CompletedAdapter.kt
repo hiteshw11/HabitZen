@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CompletedAdapter(private val completedHabits: List<String>) : RecyclerView.Adapter<CompletedAdapter.ViewHolder>() {
+class CompletedAdapter(private val completedHabits: List<CompletedHabit>) : RecyclerView.Adapter<CompletedAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val completedHabitName: TextView = itemView.findViewById(R.id.completedHabitName)
+        val completedHabitDay: TextView = itemView.findViewById(R.id.completedHabitDay)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -18,7 +20,10 @@ class CompletedAdapter(private val completedHabits: List<String>) : RecyclerView
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.completedHabitName.text = completedHabits[position]
+        val habit = completedHabits[position]
+        holder.completedHabitName.text = habit.name
+        holder.completedHabitDay.text = "                   Assigned Day: ${habit.assignedDay}" // ✅ Dis
+
     }
 
     override fun getItemCount(): Int = completedHabits.size
