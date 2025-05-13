@@ -3,15 +3,16 @@ package com.littlelemon.habitzen
 data class CompletedHabit(
     val name: String,
     val assignedDay: String,
+    val category: String
 )
 
 
 object HabitManager {
     val completedHabits = mutableListOf<CompletedHabit>() // ✅ Store full habit objects
 
-    fun addCompletedHabit(habitName:String,assignedDay: String)
+    fun addCompletedHabit(habitName:String,assignedDay: String,category: String)
     {
-        val habit = CompletedHabit(habitName, assignedDay)
+        val habit = CompletedHabit(habitName, assignedDay,category)
         completedHabits.add(habit)
     }
 

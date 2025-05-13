@@ -46,7 +46,7 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
 
         holder.habitCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                HabitManager.addCompletedHabit(habit.name,habit.days)
+                HabitManager.addCompletedHabit(habit.name,habit.days,habit.category)
                 // ✅ Redirect to CompletedClick activity when checkbox is checked
                 val intent = Intent(holder.itemView.context, CompletedClick::class.java)
                 holder.itemView.context.startActivity(intent)

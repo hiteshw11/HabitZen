@@ -2,22 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="10dp">
 
-    <TextView
-        android:id="@+id/completedHabitName"
-        android:layout_width="wrap_content"
+    <!-- Row containing Habit Name & Assigned Day -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Completed Habit"
-        android:textSize="18sp"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
+        <TextView
+            android:id="@+id/completedHabitName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Completed Habit"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingRight="16dp"/> <!-- ✅ Ensures spacing before Assigned Day -->
+
+        <TextView
+            android:id="@+id/completedHabitDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assigned Day"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_gravity="end"/> <!-- ✅ Aligns Assigned Day to the right -->
+    </LinearLayout>
+
+    <!-- Category appears below Habit Name -->
     <TextView
-        android:id="@+id/completedHabitDay"
+        android:id="@+id/completedHabitCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Assigned Day"
+        android:text="Category"
         android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
-
+        android:textColor="@android:color/darker_gray"
+        android:paddingTop="6dp"/> <!-- ✅ Ensures space between Habit Name row and Category -->
 
 </LinearLayout>
+
+
+

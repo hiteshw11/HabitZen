@@ -10,7 +10,9 @@ class CompletedAdapter(private val completedHabits: List<CompletedHabit>) : Recy
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val completedHabitName: TextView = itemView.findViewById(R.id.completedHabitName)
+        val completedHabitCategory: TextView = itemView.findViewById(R.id.completedHabitCategory)
         val completedHabitDay: TextView = itemView.findViewById(R.id.completedHabitDay)
+
 
     }
 
@@ -22,7 +24,8 @@ class CompletedAdapter(private val completedHabits: List<CompletedHabit>) : Recy
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val habit = completedHabits[position]
         holder.completedHabitName.text = habit.name
-        holder.completedHabitDay.text = "                   Assigned Day: ${habit.assignedDay}" // ✅ Dis
+        holder.completedHabitCategory.text = "Category: ${habit.category}"
+        holder.completedHabitDay.text = "                               Assigned Day: ${habit.assignedDay}" // ✅ Dis
 
     }
 
