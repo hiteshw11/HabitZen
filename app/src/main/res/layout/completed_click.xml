@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:padding="10dp"
         app:layout_constraintTop_toBottomOf="@id/completedHabitsDisplay"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/completeHistory"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -26,7 +26,7 @@
         android:visibility="gone"
 
         app:layout_constraintTop_toBottomOf="@id/completedHabitsDisplay"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/completeHistory"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -155,15 +155,27 @@
         android:layout_width="249dp"
         android:layout_height="76dp"
         android:gravity="center"
-        android:text="Completed Click Page"
+        android:text="Recently Completed Habits"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.164" />
+        app:layout_constraintVertical_bias="0.05" />
 
+    <Button
+        android:id="@+id/completeHistory"
+        android:layout_width="228dp"
+        android:layout_height="75dp"
+        android:text="View Complete History"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.786" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

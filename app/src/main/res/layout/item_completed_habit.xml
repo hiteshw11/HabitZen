@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:text="Assigned Day"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"
             android:layout_gravity="end"/> <!-- ✅ Aligns Assigned Day to the right -->
     </LinearLayout>
 

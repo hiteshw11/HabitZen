@@ -31,6 +31,7 @@
         <!-- Create New Habit Activity -->
         <activity android:name=".CreateNewHabit" android:exported="true" />
 
+        <activity android:name=".CompleteHistory" />
 
         <!-- Create completed click Activity -->
         <activity android:name=".CompletedClick" android:exported="true" />

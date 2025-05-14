@@ -3,6 +3,7 @@ package com.littlelemon.habitzen
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ class CompletedClick: AppCompatActivity() {
 
         val createNewButton = findViewById<LinearLayout>(R.id.create_new_completed)
         val homeButton = findViewById<LinearLayout>(R.id.home_Layout_completed)
+        val completeHistory=findViewById<Button>(R.id.completeHistory)
 
         createNewButton.setOnClickListener {
             val intent = Intent(this, CreateNewHabit::class.java)
@@ -24,6 +26,11 @@ class CompletedClick: AppCompatActivity() {
 
         homeButton.setOnClickListener {
             val intent = Intent(this, HomePage::class.java)
+            startActivity(intent)
+        }
+
+        completeHistory.setOnClickListener {
+            val intent=Intent(this, CompleteHistory::class.java)
             startActivity(intent)
         }
 
