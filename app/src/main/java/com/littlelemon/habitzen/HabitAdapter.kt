@@ -31,6 +31,8 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
 
 
 
+
+
         // ✅ Apply strikethrough if habit is completed
         if (HabitManager.completedHabits.any{it.name == habit.name}) {
             holder.habitName.paintFlags = holder.habitName.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG

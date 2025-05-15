@@ -10,18 +10,19 @@ class CompleteHistory : AppCompatActivity() {
         setContentView(R.layout.complete_history) // ✅ Ensure this matches your XML filename
 
         val statsTextView = findViewById<TextView>(R.id.statsDisplay)
+        val habitNameView = findViewById<TextView>(R.id.completedHabitName)
 
-        // ✅ Create a map to store habits grouped by their assigned day
-        val habitsByDay = HabitManager.completedHabits.groupBy { it.assignedDay }
+// ✅ Generate stats dynamically, ensuring proper spacing and readability
+        val statsText = HabitManager.completedHabits.groupBy { it.assignedDay }.map { (day, habits) ->
+            "$day | ${habits.size} habit(s)"
+        }.joinToString("\n\n")
+
+        val habitNamesText = HabitManager.completedHabits.map { "• ${it.name}" }.joinToString("\n")
+
+        statsTextView.text = statsText // ✅ Updates the display with formatted text
+        habitNameView.text = habitNamesText // ✅ Displays habit names dynamically
 
 
-        // ✅ Generate stats for each day
-        val statsText = habitsByDay.map { (day, habits) ->
-            "$day: ${habits.size} habits created\n${habits.joinToString(", ") { it.name }}"
-        }.joinToString("\n\n") // ✅ Formats the output
-
-
-        statsTextView.text = statsText // ✅ Display stats on the page
 
 
 

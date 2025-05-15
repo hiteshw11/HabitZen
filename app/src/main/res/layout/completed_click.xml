@@ -168,7 +168,7 @@
         android:id="@+id/completeHistory"
         android:layout_width="228dp"
         android:layout_height="75dp"
-        android:text="View Complete History"
+        android:text="View Habits Schedule"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

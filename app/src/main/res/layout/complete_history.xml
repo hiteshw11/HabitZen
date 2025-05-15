@@ -5,68 +5,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Title for the Habit Schedule -->
     <TextView
         android:id="@+id/Title"
-        android:layout_width="209dp"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:text="Your Habit History"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.056" />
-
-
-    <TextView
-        android:id="@+id/statsDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
+        android:text="Your Habit Schedule"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:paddingTop="60dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.5"/>
+
+    <!-- Stats Container -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/Title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="10dp">
 
+        <LinearLayout
+            android:id="@+id/statsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <!-- Habit Stats Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp">
 
+                <!-- Day of the Week (Left-Aligned) -->
+                <TextView
+                    android:id="@+id/statsDisplay"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:gravity="start"/>
 
+                <!-- Number of Habits (Right-Aligned) -->
+                <TextView
+                    android:id="@+id/completedHabitCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:gravity="end"/>
+            </LinearLayout>
 
+            <!-- Habit Names Below (Left-Aligned) -->
+            <TextView
+                android:id="@+id/completedHabitName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@android:color/darker_gray"
+                android:paddingStart="16dp"
+                android:paddingTop="4dp"/>
+        </LinearLayout>
+    </ScrollView>
 
-
-
-
-    <!-- Just Normal Buttons From Here -->
+    <!-- Buttons Section -->
     <LinearLayout
         android:id="@+id/home_Layout_completed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-
         android:gravity="center"
-
         android:orientation="vertical"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.974">
-
 
         <ImageView
             android:id="@+id/home_icon_completed_click"
             android:layout_width="62dp"
             android:layout_height="59dp"
             android:src="@drawable/home_icon_unfilled" />
-
 
         <TextView
             android:id="@+id/textView_home"
@@ -76,38 +109,29 @@
             android:text="Home"
             android:textAlignment="center"
             android:textSize="18sp" />
-
-
     </LinearLayout>
 
     <LinearLayout
-
         android:id="@+id/create_new_completed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-
         android:gravity="center"
-
         android:orientation="vertical"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.974">
-
 
         <ImageView
             android:id="@+id/create_new_icon_one"
             android:layout_width="62dp"
             android:layout_height="59dp"
             android:src="@drawable/create_new_icon" />
-
 
         <TextView
             android:id="@+id/textView3"
@@ -117,30 +141,23 @@
             android:text="Create New"
             android:textAlignment="center"
             android:textSize="18sp" />
-
-
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/completed_new_habit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-
         android:gravity="center"
-
         android:orientation="vertical"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.979"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.974">
-
 
         <ImageView
             android:id="@+id/check_circle_one"
@@ -156,12 +173,6 @@
             android:text="Completed"
             android:textAlignment="center"
             android:textSize="18sp" />
-
     </LinearLayout>
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

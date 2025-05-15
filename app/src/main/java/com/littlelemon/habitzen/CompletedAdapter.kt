@@ -27,6 +27,20 @@ class CompletedAdapter(private val completedHabits: List<CompletedHabit>) : Recy
         holder.completedHabitCategory.text = "Category: ${habit.category}"
         holder.completedHabitDay.text = "                               Assigned Day: ${habit.assignedDay}" // ✅ Dis
 
+        holder.completedHabitDay.text = "Assigned Day: "+when (habit.assignedDay) {
+            "Monday" -> "Mon"
+            "Tuesday" -> "Tue"
+            "Wednesday" -> "Wed"
+            "Thursday" -> "Thu"
+            "Friday" -> "Fri"
+            "Saturday" -> "Sat"
+            "Sunday" -> "Sun"
+            else -> habit.assignedDay
+        }
+
+
+
+
     }
 
     override fun getItemCount(): Int = completedHabits.size

@@ -16,6 +16,7 @@
             android:id="@+id/completedHabitName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Completed Habit"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -26,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Assigned Day"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:layout_gravity="end"/> <!-- ✅ Aligns Assigned Day to the right -->
     </LinearLayout>
@@ -37,11 +38,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Category"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textColor="@android:color/darker_gray"
         android:paddingTop="6dp"/> <!-- ✅ Ensures space between Habit Name row and Category -->
 
 </LinearLayout>
-
 
 
