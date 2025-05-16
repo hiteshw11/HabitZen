@@ -3,31 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".CompleteHistory">
 
-    <!-- Title for the Habit Schedule -->
+    <!-- Title -->
     <TextView
         android:id="@+id/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Habit Schedule"
-        android:textAlignment="center"
         android:textSize="20sp"
-        android:paddingTop="60dp"
         android:textStyle="bold"
         android:gravity="center"
+        android:paddingTop="60dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Stats Container -->
+    <!-- Stats and Habit List -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/Title"
-        app:layout_constraintBottom_toTopOf="@+id/home_Layout_completed"
+        app:layout_constraintBottom_toTopOf="@id/home_Layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="10dp">
@@ -36,48 +35,31 @@
             android:id="@+id/statsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <!-- Combined Row: Day and Habit Names -->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Left Column: Day Name + Count -->
+            <TextView
+                android:id="@+id/statsDisplay"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="10dp">
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:gravity="start" />
 
-                <!-- Day of the Week + Count -->
-                <TextView
-                    android:id="@+id/statsDisplay"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:gravity="start" />
+            <!-- Right Column: Habit Names -->
+            <TextView
+                android:id="@+id/completedHabitName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="@android:color/darker_gray"
+                android:gravity="end"
+                android:textAlignment="viewEnd"
+                android:paddingEnd="16dp"/> <!-- ✅ Pushes habit names to the right -->
 
-                <TextView
-                    android:id="@+id/completedHabitCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:gravity="end"/>
-
-                <!-- Habit Name(s) -->
-                <TextView
-                    android:id="@+id/completedHabitName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="• Going To Gym"
-                    android:textSize="16sp"
-                    android:textColor="@android:color/darker_gray"
-                    android:gravity="end"
-                    android:paddingEnd="8dp" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -177,5 +159,4 @@
             android:textAlignment="center"
             android:textSize="18sp" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
