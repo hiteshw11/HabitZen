@@ -25,7 +25,7 @@ class CompleteHistory : AppCompatActivity() {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
-                setPadding(0, 16, 0, 0)
+                setPadding(0, 16, 0, 10)
             }
 
             // Left column: Day label with habit count

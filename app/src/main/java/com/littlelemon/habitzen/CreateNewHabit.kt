@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.littlelemon.habitzen.HabitManager.Habit
+import androidx.appcompat.app.AlertDialog
 
 class CreateNewHabit : AppCompatActivity() {
 
@@ -35,12 +36,12 @@ class CreateNewHabit : AppCompatActivity() {
         }
 
         val createHabitButton = findViewById<Button>(R.id.createHabitButton)
-        createHabitButton.setOnClickListener { createHabit() }
+        createHabitButton.setOnClickListener { validateAndCreateHabit() }
     }
 
 
 
-    fun createHabit() {
+    fun createHabit(habitName: String, habitCategory: String, selectedDays: String) {
         val habitName = findViewById<EditText>(R.id.habitNameInput).text.toString()
         val habitCategory = findViewById<Spinner>(R.id.spinner_one).selectedItem.toString()
         val selectedDays = getSelectedDays()
@@ -62,6 +63,58 @@ class CreateNewHabit : AppCompatActivity() {
 //
 //    }
 //
+
+
+    private fun validateAndCreateHabit() {
+        val habitNameField = findViewById<EditText>(R.id.habitNameInput)
+        val habitName = habitNameField.text.toString().trim()
+        val habitCategory = findViewById<Spinner>(R.id.spinner_one).selectedItem.toString()
+        val selectedDays = getSelectedDays()
+
+        // ✅ Check if habit name is empty
+        if (habitName.isEmpty()) {
+            showErrorDialog("Habit Name is required!")
+            return
+        }
+
+        // ✅ Check if no frequency is selected
+        if (selectedDays.isEmpty()) {
+            showErrorDialog("Please select at least one frequency!")
+            return
+        }
+
+        // ✅ If validation passes, add habit
+        //HabitManager.addHabit(Habit(habitName, habitCategory, selectedDays))
+        createHabit(habitName, habitCategory, selectedDays)
+
+        // ✅ Redirect to HomePage after successful habit creation
+        val intent = Intent(this, HomePage::class.java)
+        intent.putExtra("habitName", habitName)
+        startActivity(intent)
+    }
+
+
+
+    private fun showErrorDialog(message: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Error: Cannot Create Habit")
+            .setMessage(message)
+            .setPositiveButton("Try Again") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     fun getSelectedDays():String
