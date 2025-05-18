@@ -12,6 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.littlelemon.habitzen.HabitManager.Habit
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+
 
 import com.littlelemon.habitzen.HabitManager.completedHabits
 import com.littlelemon.habitzen.HabitManager.createdHabits
@@ -22,6 +27,8 @@ class HomePage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homepage)
+
+
 
         val clickableLayout = findViewById<LinearLayout>(R.id.clickableLayout)
         clickableLayout.setOnClickListener {
@@ -85,6 +92,46 @@ class HomePage : AppCompatActivity() {
             val adapter2 = HabitAdapter(HabitManager.createdHabits)
             recyclerView.adapter = adapter2
         }
+
+        // pie chart logic starts
+
+
+        val pieChart = findViewById<PieChart>(R.id.progressPieChart)
+
+        if (createdHabits.isEmpty()) {
+            pieChart.visibility = View.GONE
+        } else {
+            pieChart.visibility = View.VISIBLE
+        }
+
+
+        val totalHabits = todayCreatedHabits.size
+        val completedCount = todayCompletedHabits.size
+        val remainingCount = totalHabits - completedCount
+
+        val entries = ArrayList<PieEntry>()
+        if (completedCount > 0) entries.add(PieEntry(completedCount.toFloat(), "Completed"))
+        if (remainingCount > 0) entries.add(PieEntry(remainingCount.toFloat(), "Remaining"))
+
+        val dataSet = PieDataSet(entries, "Today's Progress")
+        dataSet.setColors(
+            resources.getColor(R.color.teal_700, theme), // Completed
+            resources.getColor(R.color.purple_200, theme) // Remaining
+        )
+
+        dataSet.valueTextSize = 14f
+        dataSet.valueTextColor = resources.getColor(android.R.color.white, theme)
+
+        val data = PieData(dataSet)
+        pieChart.data = data
+        pieChart.description.isEnabled = false
+        pieChart.centerText = "Habit Progress"
+        pieChart.setEntryLabelColor(resources.getColor(android.R.color.black, theme))
+        pieChart.animateY(1000)
+        pieChart.invalidate() // Refresh char
+
+
+        // piechart logic ends
 
         // ✅ Apply filtering logic when an item is selected
         dayFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
