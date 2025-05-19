@@ -3,5 +3,8 @@
     <color name="selected_color">#FF4CAF50</color> <!-- Green -->
     <color name="unselected_color">#FFFFC107</color> <!-- Yellow -->
     <color name="teal_700">#018786</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="light_green">#90EE90</color>
     <color name="purple_200">#BB86FC</color>
 </resources>

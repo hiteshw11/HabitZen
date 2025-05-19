@@ -76,6 +76,10 @@ class HomePage : AppCompatActivity() {
 
         dayFilterSpinner.adapter = adapter1
 
+        val todayIndex = dayOptions.indexOf(currentDay)
+        if (todayIndex != -1) {
+            dayFilterSpinner.setSelection(todayIndex)
+        }
 
 
         // ✅ Improved visibility logic
@@ -115,17 +119,27 @@ class HomePage : AppCompatActivity() {
 
         val dataSet = PieDataSet(entries, "Today's Progress")
         dataSet.setColors(
-            resources.getColor(R.color.teal_700, theme), // Completed
-            resources.getColor(R.color.purple_200, theme) // Remaining
+            resources.getColor(R.color.purple_200, theme), // Completed
+            resources.getColor(R.color.light_green, theme) // Remaining
         )
 
-        dataSet.valueTextSize = 14f
-        dataSet.valueTextColor = resources.getColor(android.R.color.white, theme)
+
+        dataSet.valueTextSize = 18f
+        dataSet.valueTextColor = resources.getColor(R.color.white, theme)
 
         val data = PieData(dataSet)
         pieChart.data = data
+
+        // Customize legend and text styles
+        val legend = pieChart.legend
+        legend.textSize = 18f
+        legend.textColor = resources.getColor(R.color.black, theme)
+        legend.formSize = 20f
+
+
         pieChart.description.isEnabled = false
         pieChart.centerText = "Habit Progress"
+        pieChart.setCenterTextSize(20f)
         pieChart.setEntryLabelColor(resources.getColor(android.R.color.black, theme))
         pieChart.animateY(1000)
         pieChart.invalidate() // Refresh char
