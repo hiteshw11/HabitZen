@@ -1,351 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/home_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:fitsSystemWindows="true"
+    tools:context=".HomePage">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/progressPieChart"
-        app:layout_constraintBottom_toTopOf="@id/clickableLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
-
-    <!-- Drop-down Filter (Spinner) -->
-
-
-    <LinearLayout
-        android:id="@+id/daysLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewTitle">
-
-            <TextView
-                android:id="@+id/daysLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Days"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginEnd="150dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewTitle"
-                app:layout_constraintEnd_toStartOf="@id/dayFilterSpinner"/>
-
-
-            <Spinner
-                android:id="@+id/dayFilterSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                app:layout_constraintStart_toEndOf="@id/daysLabel"
-                app:layout_constraintTop_toBottomOf="@id/textViewTitle"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-    </LinearLayout>
-
-
-
-
-    <TextView
-        android:id="@+id/emptyMessageHome"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="60dp"
-        android:text="No Habits Created Yet"
-        android:textSize="18sp"
-        android:textColor="@android:color/darker_gray"
-        android:visibility="invisible"
-        android:contentDescription="No habits have been created yet"
-        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <TextView
-        android:id="@+id/todayStatusText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@id/clickableLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-
-    <LinearLayout
-        android:id="@+id/clickableLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-
-        android:gravity="center"
-
-        android:orientation="vertical"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.974">
-
-
-        <ImageView
-            android:id="@+id/create_new_icon_one"
-            android:layout_width="62dp"
-            android:layout_height="59dp"
-            android:src="@drawable/create_new_icon" />
-
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="100dp"
-            android:layout_height="23dp"
-            android:gravity="center"
-            android:text="Create New"
-            android:textAlignment="center"
-            android:textSize="18sp" />
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/completedclc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-
-        android:gravity="center"
-
-        android:orientation="vertical"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.979"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.974">
-
-
-        <ImageView
-            android:id="@+id/check_circle_one"
-            android:layout_width="62dp"
-            android:layout_height="59dp"
-            android:src="@drawable/check_circle" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="100dp"
-            android:layout_height="23dp"
-            android:gravity="center"
-            android:text="Completed"
-            android:textAlignment="center"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-
-    <ImageView
-        android:id="@+id/homeicon_one"
-        android:layout_width="62dp"
-        android:layout_height="59dp"
-        android:src="@drawable/home_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.074"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.931" />
-
-
-
-
-
-
-   <!-- <TextView
-        android:id="@+id/textViewOption3"
-        android:layout_width="256dp"
-        android:layout_height="54dp"
-
-        android:background="@drawable/rounded_background"
-
-        android:gravity="center_vertical|start"
-        android:paddingLeft="15dp"
-        android:text="Drink 5 Glasses of Water"
-
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.379" />
-
-
-
-
-
-    <CheckBox
-        android:id="@+id/checkBox5"
-        android:layout_width="60dp"
-        android:layout_height="54dp"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.777"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.379" />
-
-    <TextView
-        android:id="@+id/textViewOption2"
-        android:layout_width="256dp"
-        android:layout_height="54dp"
-
-        android:background="@drawable/rounded_background"
-
-        android:gravity="center_vertical|start"
-        android:paddingLeft="15dp"
-        android:text="Sleep 8 Hours"
-
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.277" />
-
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="60dp"
-        android:layout_height="54dp"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.777"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.277" />
-
-    <TextView
-        android:id="@+id/textViewOption1"
-        android:layout_width="256dp"
-        android:layout_height="54dp"
-
-        android:background="@drawable/rounded_background"
-
-        android:gravity="center_vertical"
-        android:paddingLeft="15sp"
-        android:text="Read A Book"
-
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.174" />
-
-              <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="60dp"
-        android:layout_height="54dp"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.777"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.174" />
-        -->
-
-
+    <!-- Title -->
     <TextView
         android:id="@+id/textViewTitle"
-        android:layout_width="358dp"
-        android:layout_height="49dp"
-
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/rounded_background"
-
         android:gravity="center"
         android:text="Welcome To Your Habits Page"
         android:textSize="23sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.037" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"/>
 
+    <!-- Day Filter -->
+    <LinearLayout
+        android:id="@+id/daysLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <TextView
+            android:id="@+id/daysLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Days"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <Spinner
+            android:id="@+id/dayFilterSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- Pie Chart -->
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/progressPieChart"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintTop_toBottomOf="@id/daysLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-
-
-
-
-
-
+    <!-- Status Text -->
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="81dp"
-        android:layout_height="23dp"
+        android:id="@+id/todayStatusText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
         android:gravity="center"
-        android:text="Home"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/progressPieChart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.977" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toBottomOf="@id/todayStatusText"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Empty Message -->
+    <TextView
+        android:id="@+id/emptyMessageHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Habits Created Yet"
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/todayStatusText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Home Icon -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/homeicon_one"
+                android:layout_width="62dp"
+                android:layout_height="59dp"
+                android:src="@drawable/home_icon"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textSize="18sp"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <!-- Create New -->
+        <LinearLayout
+            android:id="@+id/clickableLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/create_new_icon_one"
+                android:layout_width="62dp"
+                android:layout_height="59dp"
+                android:src="@drawable/create_new_icon"/>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create New"
+                android:textSize="18sp"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <!-- Completed -->
+        <LinearLayout
+            android:id="@+id/completedclc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/check_circle_one"
+                android:layout_width="62dp"
+                android:layout_height="59dp"
+                android:src="@drawable/check_circle"/>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completed"
+                android:textSize="18sp"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
