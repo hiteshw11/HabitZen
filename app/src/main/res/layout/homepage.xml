@@ -9,39 +9,63 @@
     android:fitsSystemWindows="true"
     tools:context=".HomePage">
 
-    <!-- Title -->
+    <!-- 🌟 Title -->
     <TextView
         android:id="@+id/textViewTitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_background"
         android:gravity="center"
         android:text="Welcome To Your Habits Page"
         android:textSize="23sp"
         android:textStyle="bold"
+        android:padding="12dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Day Filter -->
+    <!-- 🔹 Progress Tracker (Pie Chart) -->
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/progressPieChart"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- 🔹 Status Text -->
+    <TextView
+        android:id="@+id/todayStatusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="Loading status..."
+        app:layout_constraintTop_toBottomOf="@id/progressPieChart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- 🔹 Day Filter (Spinner) -->
     <LinearLayout
         android:id="@+id/daysLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginTop="8dp"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/todayStatusText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/daysLabel"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Days"
             android:textSize="16sp"
             android:textStyle="bold"/>
@@ -52,85 +76,68 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
-    <!-- Pie Chart -->
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/progressPieChart"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/daysLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Status Text -->
-    <TextView
-        android:id="@+id/todayStatusText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/progressPieChart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- RecyclerView -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
+    <!-- 🔹 Scrollable Habit List -->
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="invisible"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintTop_toBottomOf="@id/todayStatusText"
+        app:layout_constraintTop_toBottomOf="@id/daysLayout"
         app:layout_constraintBottom_toTopOf="@id/bottomBar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Empty Message -->
-    <TextView
-        android:id="@+id/emptyMessageHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No Habits Created Yet"
-        android:textSize="18sp"
-        android:textColor="@android:color/darker_gray"
-        android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/todayStatusText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    <!-- Bottom Navigation Bar -->
+            <!-- 🔹 RecyclerView for Habits List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"/>
+
+            <!-- 🔹 "No Habits Created Yet" Message -->
+            <TextView
+                android:id="@+id/emptyMessageHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No Habits Created Yet"
+                android:textSize="18sp"
+                android:textColor="@android:color/darker_gray"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 🔹 Bottom Navigation Bar -->
     <LinearLayout
         android:id="@+id/bottomBar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
         android:padding="8dp"
         android:background="?attr/selectableItemBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- Home Icon -->
         <LinearLayout
+            android:id="@+id/homeIconContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center">
-
             <ImageView
                 android:id="@+id/homeicon_one"
                 android:layout_width="62dp"
                 android:layout_height="59dp"
                 android:src="@drawable/home_icon"/>
-
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textViewHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home"
@@ -149,15 +156,13 @@
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackground">
-
             <ImageView
                 android:id="@+id/create_new_icon_one"
                 android:layout_width="62dp"
                 android:layout_height="59dp"
                 android:src="@drawable/create_new_icon"/>
-
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/textViewCreate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create New"
@@ -176,15 +181,13 @@
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackground">
-
             <ImageView
                 android:id="@+id/check_circle_one"
                 android:layout_width="62dp"
                 android:layout_height="59dp"
                 android:src="@drawable/check_circle"/>
-
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textViewCompleted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Completed"

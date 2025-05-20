@@ -28,6 +28,7 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
         val habit = habits[position]
         holder.habitName.text = habit.name
         holder.habitCategory.text = habit.category
+        holder.habitAssignedDay.visibility = View.GONE
 
 
 
