@@ -1,8 +1,8 @@
 package com.littlelemon.habitzen
 
 import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.littlelemon.habitzen.HabitManager.Habit
 
-class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<HabitAdapter.ViewHolder>() {
+class HabitAdapter(
+    private val habits: List<Habit>,
+    private val onHabitCompleted: () -> Unit
+) : RecyclerView.Adapter<HabitAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val habitName: TextView = itemView.findViewById(R.id.habitNameDisplay)
@@ -30,38 +33,48 @@ class HabitAdapter(private val habits: List<Habit>) : RecyclerView.Adapter<Habit
         val habit = habits[position]
         holder.habitName.text = habit.name
         holder.habitCategory.text = habit.category
-        holder.habitAssignedDay.visibility = View.GONE // ✅ Hide assigned day text
+        holder.habitAssignedDay.visibility = View.GONE
 
-        // ✅ Apply strikethrough if habit is completed
-        if (HabitManager.completedHabits.any { it.name == habit.name }) {
-            holder.habitName.paintFlags = holder.habitName.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-            holder.habitCheckBox.isChecked = true
-        } else {
-            holder.habitName.paintFlags = holder.habitName.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
-            holder.habitCheckBox.isChecked = false
-        }
+        val isCompleted = HabitManager.completedHabits.any { it.name == habit.name }
 
-        // ✅ Trigger animation when checkbox is checked
+        // Avoid re-triggering listener when recycling views
+        holder.habitCheckBox.setOnCheckedChangeListener(null)
+        holder.habitCheckBox.isChecked = isCompleted
+        holder.habitName.paintFlags =
+            if (isCompleted) holder.habitName.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+            else holder.habitName.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
+
         holder.habitCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 HabitManager.addCompletedHabit(habit.name, habit.days, habit.category)
+                holder.habitName.paintFlags =
+                    holder.habitName.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 
                 val activity = holder.itemView.context as Activity
                 val animationView = activity.findViewById<LottieAnimationView>(R.id.completionAnimation)
                 animationView.visibility = View.VISIBLE
                 animationView.playAnimation()
 
-                // ✅ Ensure transition only happens after animation completes
-                animationView.addAnimatorUpdateListener { animator ->
-                    if (animator.animatedFraction == 1f) { // ✅ Animation reaches full completion
-                        animationView.visibility = View.GONE
-                        val intent = Intent(holder.itemView.context, CompletedClick::class.java)
-                        holder.itemView.context.startActivity(intent)
-                    }
-                }
+                // Delay the tick mark hiding animation by 2 seconds (2000 milliseconds)
+                animationView.postDelayed({
+                    animationView.animate()
+                        .alpha(0f) // ✅ Fade out in 2 seconds
+                        .setDuration(2000)
+                        .withEndAction {
+                            animationView.visibility = View.GONE // ✅ Ensure it fully disappears
+                            animationView.alpha = 1f // ✅ Reset for future use
+                            onHabitCompleted() // ✅ Update habit progress
+                        }
+                }, 2000)
+
+
+
+
+
             }
         }
     }
+
 
     override fun getItemCount(): Int = habits.size
 }

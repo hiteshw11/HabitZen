@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -19,11 +20,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class HomePage : AppCompatActivity() {
+
+    private lateinit var congratulationsAnimation: LottieAnimationView
+    private var hasShownCongrats = false // ✅ Prevents multiple triggers of the animation
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homepage)
 
-        // 🔹 Navigation Click Events
+        // 🔹 Navigation
         findViewById<LinearLayout>(R.id.clickableLayout).setOnClickListener {
             startActivity(Intent(this, CreateNewHabit::class.java))
         }
@@ -31,63 +36,100 @@ class HomePage : AppCompatActivity() {
             startActivity(Intent(this, CompletedClick::class.java))
         }
 
-        // 🔹 UI Components
+        // 🔹 UI References
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val daysLabel = findViewById<TextView>(R.id.daysLabel)
         val dayFilterSpinner = findViewById<Spinner>(R.id.dayFilterSpinner)
         val emptyMessageHome = findViewById<TextView>(R.id.emptyMessageHome)
         val statusMessage = findViewById<TextView>(R.id.todayStatusText)
         val pieChart = findViewById<PieChart>(R.id.progressPieChart)
+        congratulationsAnimation = findViewById(R.id.congratulationsAnimation) // ✅ Celebration animation
 
         recyclerView.layoutManager = GridLayoutManager(this, 2)
 
-        // 🔹 Get Current Day of the Week
-        val currentDay = SimpleDateFormat("EEEE", Locale.getDefault()).format(Date())
-
-        // 🔹 Track Habit Progress
-        val todayCreatedHabits = getHabitsForToday()
-        val todayCompletedHabits = getCompletedHabitsForToday()
-
-        statusMessage.text = "Today is $currentDay. You have completed ${todayCompletedHabits.size} out of ${todayCreatedHabits.size} habits."
-
-        // 🔹 Set Up Day Filter Spinner (Shifted Right)
         val dayOptions = arrayOf("All", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
         val adapter1 = ArrayAdapter(this, android.R.layout.simple_spinner_item, dayOptions)
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         dayFilterSpinner.adapter = adapter1
 
+        val currentDay = SimpleDateFormat("EEEE", Locale.getDefault()).format(Date())
         val todayIndex = dayOptions.indexOf(currentDay)
         if (todayIndex != -1) dayFilterSpinner.setSelection(todayIndex)
 
-        // 🔹 Visibility Logic
+        val todayCreatedHabits = getHabitsForToday()
+        val todayCompletedHabits = getCompletedHabitsForToday()
+
+        updatePieChart(todayCreatedHabits.size, todayCompletedHabits.size)
+        updateStatusText(todayCreatedHabits.size, todayCompletedHabits.size, currentDay)
+
         if (createdHabits.isEmpty()) {
             daysLabel.visibility = View.GONE
             dayFilterSpinner.visibility = View.GONE
             emptyMessageHome.visibility = View.VISIBLE
             recyclerView.visibility = View.GONE
-            statusMessage.text = "Today is $currentDay"
             pieChart.visibility = View.GONE
         } else {
             emptyMessageHome.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
             dayFilterSpinner.visibility = View.VISIBLE
             pieChart.visibility = View.VISIBLE
-            recyclerView.adapter = HabitAdapter(createdHabits)
+            recyclerView.adapter = HabitAdapter(createdHabits) { checkForAllHabitsCompleted() }
         }
 
-        // 🔹 Setup PieChart (Progress Tracker)
-        val totalHabits = todayCreatedHabits.size
-        val completedCount = todayCompletedHabits.size
+        dayFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                filterHabits(dayOptions[position])
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    private fun filterHabits(day: String) {
+        val filteredHabits = if (day == "All") createdHabits else getHabitsForDay(day)
+        findViewById<RecyclerView>(R.id.recyclerView).adapter =
+            HabitAdapter(filteredHabits) { checkForAllHabitsCompleted() }
+    }
+
+    private fun getHabitsForDay(day: String): List<Habit> {
+        return createdHabits.filter { it.days.contains(day) }
+    }
+
+    private fun getHabitsForToday(): List<Habit> {
+        val currentDay = SimpleDateFormat("EEEE", Locale.getDefault()).format(Date())
+        return createdHabits.filter { it.days.contains(currentDay) }
+    }
+
+    private fun getCompletedHabitsForToday(): List<CompletedHabit> {
+        val todayHabitNames = getHabitsForToday().map { it.name }
+        return completedHabits.filter { it.name in todayHabitNames }
+    }
+
+    private fun updateStatusText(total: Int, completed: Int, day: String) {
+        val statusMessage = findViewById<TextView>(R.id.todayStatusText)
+        // ✅ If no habits exist, display only the day name
+        statusMessage.text = if (total == 0) {
+            "Today is $day"
+        } else {
+            "Today is $day. You have completed $completed out of $total habits."
+        }
+
+
+    }
+
+    private fun updatePieChart(totalHabits: Int, completedCount: Int) {
+        val pieChart = findViewById<PieChart>(R.id.progressPieChart)
         val remainingCount = totalHabits - completedCount
 
-        val entries = ArrayList<PieEntry>()
-        if (completedCount > 0) entries.add(PieEntry(completedCount.toFloat(), "Completed"))
-        if (remainingCount > 0) entries.add(PieEntry(remainingCount.toFloat(), "Remaining"))
+        val entries = ArrayList<PieEntry>().apply {
+            if (completedCount > 0) add(PieEntry(completedCount.toFloat(), "Completed"))
+            if (remainingCount > 0) add(PieEntry(remainingCount.toFloat(), "Remaining"))
+        }
 
         val dataSet = PieDataSet(entries, "").apply {
             colors = listOf(
-                resources.getColor(R.color.purple_200, theme), // Completed
-                resources.getColor(R.color.light_green, theme) // Remaining
+                resources.getColor(R.color.purple_200, theme),
+                resources.getColor(R.color.light_green, theme)
             )
             valueTextSize = 18f
             valueTextColor = resources.getColor(R.color.white, theme)
@@ -96,48 +138,48 @@ class HomePage : AppCompatActivity() {
         pieChart.data = PieData(dataSet)
         pieChart.description.isEnabled = false
         pieChart.centerText = "Habit Progress"
-        pieChart.setCenterTextSize(22f) // ✅ Slightly larger
+        pieChart.setCenterTextSize(22f)
         pieChart.setEntryLabelColor(resources.getColor(android.R.color.black, theme))
         pieChart.animateY(1000)
 
-        // 🔹 Center the "Today's Progress" text below the PieChart
         val legend = pieChart.legend
-        legend.textSize = 20f  // ✅ Make text larger
+        legend.textSize = 20f
         legend.textColor = resources.getColor(R.color.black, theme)
         legend.formSize = 20f
-        legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM  // ✅ Move legend below chart
-        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER  // ✅ Center it below PieChart
+        legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
         legend.orientation = Legend.LegendOrientation.HORIZONTAL
-        legend.setDrawInside(false)  // ✅ Ensure it's visible outside the chart
+        legend.setDrawInside(false)
 
         pieChart.invalidate()
+    }
 
-        // 🔹 Day Filter Logic
-        dayFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                filterHabits(dayOptions[position])
-            }
-            override fun onNothingSelected(parent: AdapterView<*>) {}
+    private fun checkForAllHabitsCompleted() {
+        if (hasShownCongrats) return
+
+        val todayCreated = getHabitsForToday().map { it.name }
+        val todayCompleted = getCompletedHabitsForToday().map { it.name }
+
+        // ✅ Trigger the celebration animation when ALL habits for today are completed
+        if (todayCreated.isNotEmpty() && todayCreated.all { it in todayCompleted }) {
+            hasShownCongrats = true
+            showCongratulationsAnimation()
         }
     }
 
-    // 🔹 Function to Filter Habits Based on Selected Day
-    private fun filterHabits(day: String) {
-        val filteredHabits = if (day == "All") createdHabits else getHabitsForDay(day)
-        findViewById<RecyclerView>(R.id.recyclerView).adapter = HabitAdapter(filteredHabits)
-    }
+    private fun showCongratulationsAnimation() {
+        congratulationsAnimation.visibility = View.VISIBLE
+        congratulationsAnimation.playAnimation()
 
-    private fun getHabitsForDay(day: String): List<Habit> {
-        return createdHabits.filter { habit -> habit.days.contains(day) }
-    }
-
-    private fun getHabitsForToday(): List<Habit> {
-        val currentDay = SimpleDateFormat("EEEE", Locale.getDefault()).format(Date())
-        return createdHabits.filter { habit -> habit.days.contains(currentDay) }
-    }
-
-    private fun getCompletedHabitsForToday(): List<CompletedHabit> {
-        val todayHabits = getHabitsForToday().map { it.name }
-        return completedHabits.filter { completedHabit -> todayHabits.contains(completedHabit.name) }
+        // ✅ Automatically fade out the animation after 2 seconds
+        congratulationsAnimation.postDelayed({
+            congratulationsAnimation.animate()
+                .alpha(0f)
+                .setDuration(2000)
+                .withEndAction {
+                    congratulationsAnimation.visibility = View.GONE
+                    congratulationsAnimation.alpha = 1f // Reset for future use
+                }
+        }, 4000)
     }
 }
