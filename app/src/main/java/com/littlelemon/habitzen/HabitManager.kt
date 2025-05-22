@@ -6,29 +6,23 @@ data class CompletedHabit(
     val category: String
 )
 
-
 object HabitManager {
     val completedHabits = mutableListOf<CompletedHabit>() // ✅ Store full habit objects
 
-    fun addCompletedHabit(habitName:String,assignedDay: String,category: String)
-    {
-        val habit = CompletedHabit(habitName, assignedDay,category)
+    fun addCompletedHabit(habitName: String, assignedDay: String, category: String) {
+        val habit = CompletedHabit(habitName, assignedDay, category)
         completedHabits.add(habit)
     }
 
+    fun removeCompletedHabit(habitName: String) {
+        completedHabits.removeIf { it.name == habitName } // ✅ Removes habit from completed list
+    }
 
-    val createdHabits= mutableListOf<Habit>()
+    val createdHabits = mutableListOf<Habit>()
 
-    fun addHabit(habit:Habit)
-    {
+    fun addHabit(habit: Habit) {
         createdHabits.add(habit)
     }
 
-    data class Habit(val name:String, val category:String,val days:String) // so we can store all attributes of habit such as name,category and days of each habit in a single object
-
-
-
-
-
-
+    data class Habit(val name: String, val category: String, val days: String) // ✅ Stores all habit attributes
 }

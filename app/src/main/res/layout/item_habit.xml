@@ -44,6 +44,16 @@
             android:layout_height="wrap_content"
             android:text="Completed" />
 
-    </LinearLayout>
+        <!-- ✅ Newly Added TextView for "Habit Completed" message -->
+        <TextView
+            android:id="@+id/habitCompletedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Habit Completed"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:visibility="gone"
+            android:layout_marginTop="8dp" />
 
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1,7 +1,5 @@
 package com.littlelemon.habitzen
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
@@ -45,36 +43,70 @@ class HabitAdapter(
             else holder.habitName.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
 
         holder.habitCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            val activity = holder.itemView.context as Activity
+            val habitCompletedText = activity.findViewById<TextView>(R.id.habitCompletedText) // ✅ Central screen text
+            val tickAnimationView = activity.findViewById<LottieAnimationView>(R.id.completionAnimation) // ✅ Tick animation
+            val allHabitsCompletedAnimation = activity.findViewById<LottieAnimationView>(R.id.congratulationsAnimation) // ✅ Celebration animation
+
             if (isChecked) {
                 HabitManager.addCompletedHabit(habit.name, habit.days, habit.category)
                 holder.habitName.paintFlags =
                     holder.habitName.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 
-                val activity = holder.itemView.context as Activity
-                val animationView = activity.findViewById<LottieAnimationView>(R.id.completionAnimation)
-                animationView.visibility = View.VISIBLE
-                animationView.playAnimation()
+                // ✅ Play tick mark animation for this habit
+                tickAnimationView.visibility = View.VISIBLE
+                tickAnimationView.playAnimation()
 
-                // Delay the tick mark hiding animation by 2 seconds (2000 milliseconds)
-                animationView.postDelayed({
-                    animationView.animate()
-                        .alpha(0f) // ✅ Fade out in 2 seconds
-                        .setDuration(2000)
-                        .withEndAction {
-                            animationView.visibility = View.GONE // ✅ Ensure it fully disappears
-                            animationView.alpha = 1f // ✅ Reset for future use
-                            onHabitCompleted() // ✅ Update habit progress
-                        }
-                }, 2000)
+                // ✅ Flashing animation for the central "Habit Completed" text
+                habitCompletedText.visibility = View.VISIBLE
+                habitCompletedText.alpha = 1f
+                habitCompletedText.animate()
+                    .alpha(0f).setDuration(700) // Fade out
+                    .withEndAction {
+                        habitCompletedText.animate()
+                            .alpha(1f).setDuration(700) // Fade back in
+                            .withEndAction {
+                                habitCompletedText.animate()
+                                    .alpha(0f).setDuration(700) // Second fade out
+                                    .withEndAction {
+                                        habitCompletedText.animate()
+                                            .alpha(1f).setDuration(900) // Second fade in
+                                            .withEndAction {
+                                                habitCompletedText.visibility = View.GONE // Hide after flashing
+                                                tickAnimationView.animate() // ✅ Fade out tick animation
+                                                    .alpha(0f)
+                                                    .setDuration(1500)
+                                                    .withEndAction {
+                                                        tickAnimationView.visibility = View.GONE
+                                                        tickAnimationView.alpha = 1f // ✅ Reset for reuse
+                                                    }
+                                            }
+                                    }
+                            }
+                    }
 
+                // ✅ Trigger celebration animation when ALL habits are completed
+                if (HabitManager.completedHabits.size == habits.size) {
+                    allHabitsCompletedAnimation.visibility = View.VISIBLE
+                    allHabitsCompletedAnimation.playAnimation()
 
+                    allHabitsCompletedAnimation.postDelayed({
+                        allHabitsCompletedAnimation.animate()
+                            .alpha(0f)
+                            .setDuration(2000)
+                            .withEndAction {
+                                allHabitsCompletedAnimation.visibility = View.GONE
+                                allHabitsCompletedAnimation.alpha = 1f // ✅ Reset for future
+                            }
+                    }, 3000) // ✅ Celebration lasts for 3 seconds before fading
+                }
 
-
-
+            } else {
+                HabitManager.removeCompletedHabit(habit.name) // ✅ Using function for clean removal
+                holder.habitName.paintFlags = holder.habitName.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
             }
         }
     }
-
 
     override fun getItemCount(): Int = habits.size
 }
