@@ -14,12 +14,15 @@
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_background"
         android:gravity="center"
         android:text="Welcome To Your Habits Page"
-        android:textSize="23sp"
+        android:textSize="22sp"
         android:textStyle="bold"
-        android:padding="12dp"
+        android:textColor="@android:color/white"
+        android:padding="14dp"
+        android:elevation="8dp"
+        android:background="@drawable/modern_background"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -129,14 +132,15 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/congratulationsAnimation"
         android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_height="250dp"
         android:visibility="gone"
         app:lottie_rawRes="@raw/awesome_animation"
         app:lottie_autoPlay="false"
         app:lottie_loop="true"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="100dp" />
 
     <!-- 🔹 Bottom Navigation Bar -->
     <LinearLayout

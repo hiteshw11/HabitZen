@@ -19,8 +19,8 @@ class HabitAdapter(
         val habitCategory: TextView = itemView.findViewById(R.id.habitCategoryDisplay)
         val habitAssignedDay: TextView = itemView.findViewById(R.id.habitAssignedDayDisplay)
         val habitCheckBox: CheckBox = itemView.findViewById(R.id.habitCheckBox)
-        val habitCompletedText: TextView = itemView.findViewById(R.id.habitCompletedText) // ✅ Per habit
-        val tickAnimationView: LottieAnimationView = itemView.findViewById(R.id.habitCompletionAnimation) // ✅ Per habit
+        val habitCompletedText: TextView = itemView.findViewById(R.id.habitCompletedText)
+        val tickAnimationView: LottieAnimationView = itemView.findViewById(R.id.habitCompletionAnimation)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,7 +36,6 @@ class HabitAdapter(
 
         val isCompleted = HabitManager.completedHabits.any { it.name == habit.name }
 
-        // Prevent unwanted event firing on recycled views
         holder.habitCheckBox.setOnCheckedChangeListener(null)
         holder.habitCheckBox.isChecked = isCompleted
         holder.habitName.paintFlags =
@@ -49,32 +48,32 @@ class HabitAdapter(
                 holder.habitName.paintFlags =
                     holder.habitName.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 
-                // ✅ Play tick animation only for this habit
                 holder.tickAnimationView.visibility = View.VISIBLE
                 holder.tickAnimationView.playAnimation()
 
-                // ✅ Animate "Habit Completed" text only for this habit
                 holder.habitCompletedText.visibility = View.VISIBLE
                 holder.habitCompletedText.alpha = 1f
                 holder.habitCompletedText.animate()
-                    .alpha(0f).setDuration(700) // Fade out
+                    .alpha(0f).setDuration(700)
                     .withEndAction {
                         holder.habitCompletedText.animate()
-                            .alpha(1f).setDuration(700) // Fade back in
+                            .alpha(1f).setDuration(700)
                             .withEndAction {
                                 holder.habitCompletedText.animate()
-                                    .alpha(0f).setDuration(700) // Second fade out
+                                    .alpha(0f).setDuration(700)
                                     .withEndAction {
                                         holder.habitCompletedText.animate()
-                                            .alpha(1f).setDuration(900) // Second fade in
+                                            .alpha(1f).setDuration(900)
                                             .withEndAction {
-                                                holder.habitCompletedText.visibility = View.GONE // ✅ Hide after flashing
-                                                holder.tickAnimationView.animate() // ✅ Fade out tick animation
+                                                holder.habitCompletedText.visibility = View.GONE
+                                                holder.tickAnimationView.animate()
                                                     .alpha(0f)
                                                     .setDuration(1500)
                                                     .withEndAction {
                                                         holder.tickAnimationView.visibility = View.GONE
-                                                        holder.tickAnimationView.alpha = 1f // ✅ Reset for reuse
+                                                        holder.tickAnimationView.alpha = 1f
+                                                        // ✅ Notify that a habit was completed after animation ends
+                                                        onHabitCompleted()
                                                     }
                                             }
                                     }
