@@ -11,65 +11,88 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/habitNameDisplay"
-            android:layout_width="wrap_content"
+        <!-- ✅ Habit Details -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Habit Name"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingBottom="4dp" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/habitCategoryDisplay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Category"
-            android:textSize="16sp"
-            android:paddingBottom="2dp" />
+            <TextView
+                android:id="@+id/habitNameDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Habit Name"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingBottom="4dp" />
 
-        <TextView
-            android:id="@+id/habitAssignedDayDisplay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Assigned Day"
-            android:textSize="14sp"
-            android:paddingBottom="8dp" />
+            <TextView
+                android:id="@+id/habitCategoryDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textSize="16sp"
+                android:paddingBottom="2dp" />
 
+            <TextView
+                android:id="@+id/habitAssignedDayDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Assigned Day"
+                android:textSize="14sp"
+                android:paddingBottom="8dp" />
+        </LinearLayout>
+
+        <!-- ✅ Habit Completed Checkbox -->
         <CheckBox
             android:id="@+id/habitCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Completed" />
 
-        <!-- ✅ Habit-Specific Completion Animation -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
+        <!-- ✅ Delete Button -->
+        <ImageView
+            android:id="@+id/deleteHabitButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_delete"
+            android:contentDescription="Delete Habit"
+            app:tint="@android:color/holo_red_dark"
+            android:padding="4dp"
+            android:layout_marginStart="8dp"/>
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/habitCompletionAnimation"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:visibility="gone"
-                app:lottie_autoPlay="false"
-                app:lottie_loop="false"
-                app:lottie_rawRes="@raw/done_animation" />
-        </FrameLayout>
-
-        <!-- ✅ TextView for "Habit Completed" message -->
-        <TextView
-            android:id="@+id/habitCompletedText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Habit Completed"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:visibility="gone"
-            android:layout_marginTop="8dp" />
     </LinearLayout>
+
+    <!-- ✅ Habit-Specific Completion Animation -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/habitCompletionAnimation"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:visibility="gone"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/done_animation" />
+    </FrameLayout>
+
+    <!-- ✅ "Habit Completed" Message -->
+    <TextView
+        android:id="@+id/habitCompletedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Habit Completed"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"/>
+
 </androidx.cardview.widget.CardView>

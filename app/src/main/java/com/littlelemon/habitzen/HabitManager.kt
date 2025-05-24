@@ -24,5 +24,7 @@ object HabitManager {
         createdHabits.add(habit)
     }
 
+
+
     data class Habit(val name: String, val category: String, val days: String) // ✅ Stores all habit attributes
 }

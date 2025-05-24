@@ -22,28 +22,27 @@ import java.util.*
 class HomePage : AppCompatActivity() {
 
     private lateinit var congratulationsAnimation: LottieAnimationView
-    private var hasShownCongrats = false // ✅ Prevents multiple triggers of the animation
+    private var hasShownCongrats = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.homepage)
 
-        // 🔹 Navigation
         findViewById<LinearLayout>(R.id.clickableLayout).setOnClickListener {
             startActivity(Intent(this, CreateNewHabit::class.java))
         }
+
         findViewById<LinearLayout>(R.id.completedclc).setOnClickListener {
             startActivity(Intent(this, CompletedClick::class.java))
         }
 
-        // 🔹 UI References
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val daysLabel = findViewById<TextView>(R.id.daysLabel)
         val dayFilterSpinner = findViewById<Spinner>(R.id.dayFilterSpinner)
         val emptyMessageHome = findViewById<TextView>(R.id.emptyMessageHome)
         val statusMessage = findViewById<TextView>(R.id.todayStatusText)
         val pieChart = findViewById<PieChart>(R.id.progressPieChart)
-        congratulationsAnimation = findViewById(R.id.congratulationsAnimation) // ✅ Celebration animation
+        congratulationsAnimation = findViewById(R.id.congratulationsAnimation)
 
         recyclerView.layoutManager = GridLayoutManager(this, 2)
 
@@ -73,7 +72,7 @@ class HomePage : AppCompatActivity() {
             recyclerView.visibility = View.VISIBLE
             dayFilterSpinner.visibility = View.VISIBLE
             pieChart.visibility = View.VISIBLE
-            recyclerView.adapter = HabitAdapter(createdHabits) { checkForAllHabitsCompleted() }
+            recyclerView.adapter = HabitAdapter(createdHabits.toMutableList()) { checkForAllHabitsCompleted() }
         }
 
         dayFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -86,7 +85,12 @@ class HomePage : AppCompatActivity() {
     }
 
     private fun filterHabits(day: String) {
-        val filteredHabits = if (day == "All") createdHabits else getHabitsForDay(day)
+        val filteredHabits = if (day == "All") {
+            createdHabits.toMutableList()
+        } else {
+            getHabitsForDay(day).toMutableList()
+        }
+
         findViewById<RecyclerView>(R.id.recyclerView).adapter =
             HabitAdapter(filteredHabits) { checkForAllHabitsCompleted() }
     }
@@ -107,14 +111,11 @@ class HomePage : AppCompatActivity() {
 
     private fun updateStatusText(total: Int, completed: Int, day: String) {
         val statusMessage = findViewById<TextView>(R.id.todayStatusText)
-        // ✅ If no habits exist, display only the day name
         statusMessage.text = if (total == 0) {
             "Today is $day"
         } else {
             "Today is $day. You have completed $completed out of $total habits."
         }
-
-
     }
 
     private fun updatePieChart(totalHabits: Int, completedCount: Int) {
@@ -160,7 +161,6 @@ class HomePage : AppCompatActivity() {
         val todayCreated = getHabitsForToday().map { it.name }
         val todayCompleted = getCompletedHabitsForToday().map { it.name }
 
-        // ✅ Trigger the celebration animation when ALL habits for today are completed
         if (todayCreated.isNotEmpty() && todayCreated.all { it in todayCompleted }) {
             hasShownCongrats = true
             showCongratulationsAnimation()
@@ -171,14 +171,13 @@ class HomePage : AppCompatActivity() {
         congratulationsAnimation.visibility = View.VISIBLE
         congratulationsAnimation.playAnimation()
 
-        // ✅ Automatically fade out the animation after 2 seconds
         congratulationsAnimation.postDelayed({
             congratulationsAnimation.animate()
                 .alpha(0f)
                 .setDuration(2000)
                 .withEndAction {
                     congratulationsAnimation.visibility = View.GONE
-                    congratulationsAnimation.alpha = 1f // Reset for future use
+                    congratulationsAnimation.alpha = 1f
                 }
         }, 4000)
     }

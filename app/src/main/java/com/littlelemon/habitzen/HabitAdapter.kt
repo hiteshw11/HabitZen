@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.littlelemon.habitzen.HabitManager.Habit
 
 class HabitAdapter(
-    private val habits: List<Habit>,
+    private val habits: MutableList<Habit>,
     private val onHabitCompleted: () -> Unit
 ) : RecyclerView.Adapter<HabitAdapter.ViewHolder>() {
 
@@ -21,6 +22,7 @@ class HabitAdapter(
         val habitCheckBox: CheckBox = itemView.findViewById(R.id.habitCheckBox)
         val habitCompletedText: TextView = itemView.findViewById(R.id.habitCompletedText)
         val tickAnimationView: LottieAnimationView = itemView.findViewById(R.id.habitCompletionAnimation)
+        val deleteHabitButton: ImageView = itemView.findViewById(R.id.deleteHabitButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,6 +43,16 @@ class HabitAdapter(
         holder.habitName.paintFlags =
             if (isCompleted) holder.habitName.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
             else holder.habitName.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
+
+        holder.deleteHabitButton.setOnClickListener {
+            HabitManager.removeCompletedHabit(habit.name)
+            habits.removeAt(holder.adapterPosition)
+            notifyItemRemoved(holder.adapterPosition)
+
+            if (habits.isEmpty()) {
+                onHabitCompleted()
+            }
+        }
 
         holder.habitCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -72,7 +84,6 @@ class HabitAdapter(
                                                     .withEndAction {
                                                         holder.tickAnimationView.visibility = View.GONE
                                                         holder.tickAnimationView.alpha = 1f
-                                                        // ✅ Notify that a habit was completed after animation ends
                                                         onHabitCompleted()
                                                     }
                                             }
