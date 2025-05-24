@@ -3,67 +3,52 @@ package com.littlelemon.habitzen
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Spinner
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.littlelemon.habitzen.HabitManager.Habit
+import android.view.MotionEvent
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 
 class CreateNewHabit : AppCompatActivity() {
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       setContentView(R.layout.createnewhabit) // to move to a different activity you need to val intent = Intent(this, CompletedHabits::class.java)
-//            startActivity(intent), here the setContent view will just change layout of current page to a xml file (which is also needed) and not move to other activity
+        setContentView(R.layout.createnewhabit)
+
         val homeclick = findViewById<LinearLayout>(R.id.home_Layout)
-
         val completed = findViewById<LinearLayout>(R.id.completed_new_habit)
+        val createHabitButton = findViewById<Button>(R.id.createHabitButton)
 
-            homeclick.setOnClickListener {
-                val intent = Intent(this, HomePage::class.java)
-                startActivity(intent)
-            }
+        // 🏠 Navigate to Home
+        homeclick.setOnClickListener {
+            val intent = Intent(this, HomePage::class.java)
+            startActivity(intent)
+        }
 
+        // ✅ Navigate to Completed Habits
         completed.setOnClickListener {
             val intent = Intent(this, CompletedClick::class.java)
             startActivity(intent)
         }
 
-        val createHabitButton = findViewById<Button>(R.id.createHabitButton)
-        createHabitButton.setOnClickListener { validateAndCreateHabit() }
+        // 🚀 Create Habit Button Click
+        createHabitButton.setOnClickListener {
+            validateAndCreateHabit()
+        }
+
+        // ✨ Button Press Animation (Scaling)
+        createHabitButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    v.animate().scaleX(0.95f).scaleY(0.95f).setDuration(100).start()
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    v.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+                }
+            }
+            false
+        }
     }
-
-
-
-    fun createHabit(habitName: String, habitCategory: String, selectedDays: String) {
-        val habitName = findViewById<EditText>(R.id.habitNameInput).text.toString()
-        val habitCategory = findViewById<Spinner>(R.id.spinner_one).selectedItem.toString()
-        val selectedDays = getSelectedDays()
-
-
-        HabitManager.addHabit(Habit(habitName,habitCategory,selectedDays))
-
-        intent.putExtra("habitName", habitName)
-        // Pass data to HomePage using Intent Extras
-        val intent = Intent(this, HomePage::class.java)
-        startActivity(intent)
-
-    }
-
-//
-//        intent.putExtra("habitCategory", habitCategory)
-//        intent.putExtra("habitDays", selectedDays)
-//        startActivity(intent)
-//
-//    }
-//
-
 
     private fun validateAndCreateHabit() {
         val habitNameField = findViewById<EditText>(R.id.habitNameInput)
@@ -71,29 +56,34 @@ class CreateNewHabit : AppCompatActivity() {
         val habitCategory = findViewById<Spinner>(R.id.spinner_one).selectedItem.toString()
         val selectedDays = getSelectedDays()
 
-        // ✅ Check if habit name is empty
         if (habitName.isEmpty()) {
             showErrorDialog("Habit Name is required!")
             return
         }
 
-        // ✅ Check if no frequency is selected
         if (selectedDays.isEmpty()) {
             showErrorDialog("Please select at least one frequency!")
             return
         }
 
-        // ✅ If validation passes, add habit
-        //HabitManager.addHabit(Habit(habitName, habitCategory, selectedDays))
         createHabit(habitName, habitCategory, selectedDays)
 
-        // ✅ Redirect to HomePage after successful habit creation
         val intent = Intent(this, HomePage::class.java)
         intent.putExtra("habitName", habitName)
         startActivity(intent)
     }
 
+    fun createHabit(habitName: String, habitCategory: String, selectedDays: String) {
+        val habitNameValue = findViewById<EditText>(R.id.habitNameInput).text.toString()
+        val habitCategoryValue = findViewById<Spinner>(R.id.spinner_one).selectedItem.toString()
+        val selectedDaysValue = getSelectedDays()
 
+        HabitManager.addHabit(HabitManager.Habit(habitNameValue, habitCategoryValue, selectedDaysValue))
+
+        val intent = Intent(this, HomePage::class.java)
+        intent.putExtra("habitName", habitNameValue)
+        startActivity(intent)
+    }
 
     private fun showErrorDialog(message: String) {
         AlertDialog.Builder(this)
@@ -103,22 +93,7 @@ class CreateNewHabit : AppCompatActivity() {
             .show()
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    fun getSelectedDays():String
-    {
+    fun getSelectedDays(): String {
         val selectedDaysList = mutableListOf<String>()
         if (findViewById<CheckBox>(R.id.checkBoxMonday).isChecked) selectedDaysList.add("Monday")
         if (findViewById<CheckBox>(R.id.checkBoxTuesday).isChecked) selectedDaysList.add("Tuesday")
@@ -129,13 +104,4 @@ class CreateNewHabit : AppCompatActivity() {
         if (findViewById<CheckBox>(R.id.checkBoxSunday).isChecked) selectedDaysList.add("Sunday")
         return selectedDaysList.joinToString(", ")
     }
-
-
-
-
-
 }
-
-
-
-
